@@ -1,0 +1,1 @@
+Checks: '*,-llvm-header-guard,-clang-diagnostic-pragma-once-outside-header,-llvmlibc-restrict-system-libc-headers,-llvmlibc-implementation-in-namespace,-modernize-use-trailing-return-type,-fuchsia-overloaded-operator,-google-explicit-constructor,-hicpp-explicit-conversions,-bugprone-sizeof-expression,-cppcoreguidelines-owning-memory,-fuchsia-default-arguments-declarations'

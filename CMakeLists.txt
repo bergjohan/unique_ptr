@@ -1,0 +1,31 @@
+cmake_minimum_required(VERSION 3.13)
+project(unique_ptr)
+
+enable_testing()
+
+function(add_fail_test name source)
+  add_library(${name} STATIC EXCLUDE_FROM_ALL ${source})
+  target_include_directories(${name} PRIVATE include)
+  target_compile_features(${name} PRIVATE cxx_std_20)
+  target_compile_options(${name} PRIVATE -Wall -Wextra -Wpedantic)
+  add_test(NAME ${name} COMMAND ${CMAKE_COMMAND} --build . --target ${name})
+  set_tests_properties(${name} PROPERTIES WILL_FAIL TRUE)
+endfunction()
+
+add_fail_test(fail_test tests/unique_ptr_dltr_dflt.test.cpp)
+add_fail_test(fail_test1 tests/unique_ptr_dltr_dflt1.test.cpp)
+add_fail_test(fail_test2 tests/unique_ptr_single_ctor.test.cpp)
+
+find_package(Catch2 REQUIRED)
+add_executable(tests tests/main.cpp tests/unique_ptr.test.cpp)
+target_include_directories(tests PRIVATE include)
+target_compile_features(tests PRIVATE cxx_std_20)
+target_compile_options(tests PRIVATE -Wall -Wextra -Wpedantic)
+target_link_libraries(tests PRIVATE Catch2::Catch2)
+add_test(NAME tests COMMAND tests)
+
+add_executable(constexpr_test tests/unique_ptr_constexpr.test.cpp)
+target_include_directories(constexpr_test PRIVATE include)
+target_compile_features(constexpr_test PRIVATE cxx_std_20)
+target_compile_options(constexpr_test PRIVATE -Wall -Wextra -Wpedantic)
+add_test(NAME constexpr_test COMMAND constexpr_test)
