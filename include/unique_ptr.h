@@ -49,7 +49,8 @@ private:
 };
 
 template <typename T, typename D>
-requires std::is_empty_v<D> class Compressed_pair<T, D> : private D
+requires(std::is_empty_v<D> && !std::is_final_v<D>) class Compressed_pair<T, D>
+    : private D
 {
 public:
   constexpr Compressed_pair() = default;
