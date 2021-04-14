@@ -12,33 +12,33 @@ template <typename T, typename D>
 class Compressed_pair
 {
 public:
-  constexpr Compressed_pair() = default;
+  constexpr Compressed_pair() noexcept = default;
 
   // Pass by value since T is a pointer
-  constexpr explicit Compressed_pair(T first) : first_(first) {}
+  constexpr explicit Compressed_pair(T first) noexcept : first_(first) {}
 
   template <typename U>
-  constexpr Compressed_pair(T first, U &&second)
+  constexpr Compressed_pair(T first, U &&second) noexcept
       : first_(first), second_(std::forward<U>(second))
   {
   }
 
-  constexpr T &first()
+  constexpr T &first() noexcept
   {
     return first_;
   }
 
-  constexpr const T &first() const
+  constexpr const T &first() const noexcept
   {
     return first_;
   }
 
-  constexpr D &second()
+  constexpr D &second() noexcept
   {
     return second_;
   }
 
-  constexpr D &second() const
+  constexpr D &second() const noexcept
   {
     return second_;
   }
@@ -53,33 +53,33 @@ requires(std::is_empty_v<D> && !std::is_final_v<D>) class Compressed_pair<T, D>
     : private D
 {
 public:
-  constexpr Compressed_pair() = default;
+  constexpr Compressed_pair() noexcept = default;
 
   // Pass by value since T is a pointer
-  constexpr explicit Compressed_pair(T first) : first_(first) {}
+  constexpr explicit Compressed_pair(T first) noexcept : first_(first) {}
 
   template <typename U>
-  constexpr Compressed_pair(T first, U &&second)
+  constexpr Compressed_pair(T first, U &&second) noexcept
       : D(std::forward<U>(second)), first_(first)
   {
   }
 
-  constexpr T &first()
+  constexpr T &first() noexcept
   {
     return first_;
   }
 
-  constexpr const T &first() const
+  constexpr const T &first() const noexcept
   {
     return first_;
   }
 
-  constexpr D &second()
+  constexpr D &second() noexcept
   {
     return *this;
   }
 
-  constexpr D &second() const
+  constexpr D &second() const noexcept
   {
     return *this;
   }
